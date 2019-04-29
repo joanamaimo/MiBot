@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	<!-- ChatBot que dona informació sobre una acadèmia de ball mitjançant botons o bé escrivint al chat -->
+	
+	<!-- Categoria d'errors quan el bot no enten el que escriu l'usuari-->
+	<category>
+	    <pattern>*</pattern>
+	   	  <template>
+	      No tenc una resposta. Escriu continuar per seguir navegant a l'aplicació...
+	   </template>
+	</category>
+	
+		<!-- Categoria per tornar al menú principal sense saludar-->
+	<category>
+        <pattern>MES INFORMACIO</pattern>
+        <template>
+            <srai>HOLA</srai>
+        </template>
+    </category>
+    
+    	<!-- Categoria on s'agafen els arxius .map per ampliar informació dels dos balls i .set per les excepcions-->
+	<category>
+	    <pattern>INFORMACIO SOBRE<set>escola</set></pattern>
+        <template>
+        <think><set name="escola"><star /></set></think>    
+        <map name="escola"><star /></map> El <star /> és<split />
+        <srai>continuar</srai>
+        </template>
+    </category>
+    
+		<!-- Categoria de Menú continuar per seguir navegant si quedam sense opcions-->
+	<category>
+        <pattern>CONTINUAR</pattern>
+         <template>Què vols fer ara?
+         <button>
+            <text>Que es el lindy hop</text>
+            <postback>QUE ES EL LINDY HOP</postback>
+        </button>
+        <button>
+            <text>Que es el blues</text>
+            <postback>QUE ES EL BLUES</postback>
+        </button>
+        <button>
+            <text>Veure el lindy hop</text>
+            <postback>VEURE EL LINDY HOP</postback>
+        </button>
+        <button>
+            <text>Veure el Blues</text>
+            <postback>VEURE EL BLUES</postback>
+        </button>
+        <button>
+            <text>Apuntarme a classes</text>
+            <postback>VULL APUNTARME</postback>
+        </button>
+        <button>
+            <text>Informació de festivals</text>
+            <postback>INFORMACIO DE FESTIVALS</postback>
+        </button>
+        </template>
+    </category>
+    
+    	<!-- Categoria de Menú principal que enllaça amb cada bloc segons necessita-->
+    <category>
+	    <pattern>HOLA</pattern>
+	    <template>
+	        <image>https://media.giphy.com/media/1woBOaIrgXdnkEsvus/giphy.gif</image>
+	     Hola, Soc Sputnik i seré la teva guia a l'aplicació! <split/> 
+	     Amb els meus mitjans podràs navegar per la cultura afro-americana que envolta el món del Swing i el Blues! <split/>
+	     A més podrem fer una volta junts per la nostra escola per si t'interessa iniciar-te en aquest món apasionant! <split/>
+	     I si vols, podem parlar sobre festivals o veure més videos! <split/>
+	     Comencem... Tria el que vols conèixer:
+	         <button>
+	         <text>Que es el Lindy hop</text>
+	         <postback>QUE ES EL LINDY</postback>
+	         </button>
+	     <button>
+	         <text>Que es el Blues</text>
+	         <postback>QUE ES EL BLUES</postback>
+	     </button>
+	     <button>
+	         <text>Vull apuntarme</text>
+	         <postback>APUNTARME</postback>
+         </button>
+	     </template>
+	</category>
+	
+		<!-- Categories del ball lindy hop del menu principal-->
+	<category>
+	    <pattern>QUE ES EL LINDY #</pattern>
+	    <template>
+	        <think><set name="ball"><star/></set></think>
+	        <image>http://dspncdn.com/a1/media/692x/90/ef/79/90ef79a61d7ffe263360f189f2685e75.jpg</image>
+	        <button>
+	            <text>Click aquí per veure la informació</text>
+	            <url>https://ca.wikipedia.org/wiki/Lindy_Hop</url>
+	        </button>
+	        <reply>
+	            <text>Continuar o fes click</text>
+	            <postback>CONTINUAR</postback>
+	        </reply>
+	        <reply>
+	            <text>Més informació...</text>
+	            <postback>informacio sobre lindy</postback>
+	        </reply>
+	    </template>
+	 </category>
+	 <category>
+	   <pattern>VEURE EL LINDY #</pattern>
+	   <template>
+	       <image>https://i.ytimg.com/vi/YFpU5ypLrKQ/hqdefault.jpg</image>
+	       <button>
+	             <text>Click aquí per veure el video</text>
+	             <url>https://www.youtube.com/watch?v=ahoJReiCaPk</url>
+	       </button>
+	       <reply>
+	            <text>Continuar o fes click</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+	            <text>Veure més videos</text>
+	            <postback>VEURE MES VIDEOS</postback>
+            </reply>
+	  </template>
+	</category>
+	
+		<!-- Categories del ball blues del menú principal-->
+	 <category>
+	    <pattern>QUE ES EL BLUES</pattern>
+	    <template>
+	        <think><set name="ball"><star/></set></think>
+	        <image>https://www.condeduquemadrid.es/sites/default/files/import/activities/2015/10/The-Blues.jpg</image>
+	        <button>
+	            <text>click aquí per veure la informació</text>
+	            <url>https://ca.wikipedia.org/wiki/Blues</url>
+	        </button>
+	        <reply>
+	            <text>Continuar o fes click</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+	            <text>Més informació...</text>
+	            <postback>informacio sobre blues</postback>
+	        </reply>
+	    </template>
+	</category>
+	<category>
+	   <pattern>VEURE EL BLUES</pattern>
+	    <template>
+	        <image>https://cdn5.adamoandvicci.com/wp-content/uploads/2017/02/Adamo-and-Vicci-10.jpg</image>
+	        <button>
+	                <text>Click aquí per veure el video</text>
+	                <url>https://youtu.be/Ih51z12MucQ</url>
+	        </button>
+	        <reply>
+	            <text>Continuar o fes click</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+	            <text>Veure més videos</text>
+	            <postback>VEURE MES VIDEOS</postback>
+            </reply>
+	    </template>
+	</category>
+
+			<!-- Categoria de Menú de Classes que ellaça amb el menu principal-->
+    <category>
+	    <pattern># APUNTARME #</pattern>
+	    <template>
+	            <card>
+	                <image>https://bit.ly/2UMH0cR</image>
+	                <title>CLASSES GALACTIC OLD SCHOOL</title>
+	                <subtitle>Més informació a continuació...</subtitle>
+	                <button>
+	                    <text>Click aquí per veure els horaris</text>
+	                    <postback>HORARIS</postback>
+                    </button>
+                    <button>
+	                    <text>Click aquí per veure les tarifes</text>
+	                    <postback>TARIFES</postback>
+                   </button>
+                   <button>
+                       <text>Click aquí per anar al formulari d'inscripció</text>
+                       <postback>FORMULARI</postback>
+                   </button>
+                </card>
+        </template>
+    </category>
+    
+    <!-- Categories del menú Classes per fer una de les seves accions (horaris, tarifes o formulari)-->
+    <category>
+	    <pattern># HORARIS #</pattern>
+	    <template>
+	        Espero que trobis una hora que et vagi bé
+ 	       <image>https://sites.google.com/a/xtec.cat/escolacancladellas/_/rsrc/1453467528456/horaris/horarios.jpg</image>
+	       <button>
+	            <text>click aquí per veure la disponibilitat d'horaris</text>
+	            <url>https://bit.ly/2VxUGFv</url>
+	            </button>
+	            <reply>
+	            <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+	       </template>
+	</category>
+	<category>
+	    <pattern># TARIFES #</pattern>
+	    <template>
+	        <card>
+	            <image>http://www.imet.cat/flaixemprendre/butlleti/29/imatges/preu.jpg</image>
+	            <title>TARIFES PER NOMBRE DE CLASSES</title>
+	            <subtitle>Preus per trimestre:</subtitle>
+	           <button>
+	               <text>1 CLASSE SETMANAL</text>
+	               <postback>1 CLASSE</postback>
+               </button>
+               <button>
+	               <text>2 CLASSES SETMANALS</text>
+	               <postback>2 CLASSES</postback>
+               </button>
+               <button>
+	               <text>3 CLASSES SETMANALS</text>
+	               <postback>3 CLASSES</postback>
+               </button>
+               </card>
+               <reply>
+	            <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+       </template>
+	</category>
+	<category>
+	    <pattern># FORMULARI #</pattern>
+	    <template>
+	        Aquí trobaràs la informació de l'escola, segueix les passes del formulari per apuntar-te...
+ 	       <image>https://instagram.frix2-1.fna.fbcdn.net/vp/d70f18fa5ef3c476eadf75d29d344ed8/5CFBBD5C/t51.2885-15/e15/c216.0.647.647/s480x480/44769466_800567036972360_7308372653714141666_n.jpg?_nc_ht=instagram.frix2-1.fna.fbcdn.net</image>
+	       <button>
+	            <text>click aquí per anar al formulari</text>
+	            <url>https://galactic.kydemy.com/#/registration</url>
+	        </button>
+	        <reply>
+	            <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+	    </template>
+	</category>
+	
+				<!-- Categoria del menú Tarifes per fer una de les seves accions-->
+
+	<category>
+	    <pattern>1 *</pattern>
+	    <template>TARIFA BÀSICA: 80€/Trimestre
+            <reply>
+                <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+	    </template>
+	</category>
+    <category>
+	    <pattern>2 *</pattern>
+	     <template>TARIFA GALÀCTICA: 120€/Trimestre
+	        <reply>
+                <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+	     </template>
+    </category>
+    <category>
+	    <pattern>3 *</pattern>
+	    <template>TARIFA SPUTNIK: 150€/Trimestre
+	        <reply>
+                <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Menú per apuntarme</text>
+                <postback>APUNTARME</postback>
+            </reply>
+	    </template>
+	</category>
+	
+		<!--Categoria per donar context i que l'usuari pugui veure més videos-->
+	<category>
+	    <pattern># VEURE MES VIDEOS</pattern>
+	    <template>Puc mostrarte mes videos</template>
+	</category>
+	<category>
+	    <pattern>MOSTRA MES VIDEOS</pattern>
+	    <that>PUC MOSTRARTE MES VIDEOS</that>
+	    <template>Vols veure lindy hop?</template>
+	</category>
+    <category>
+            <pattern>SI</pattern>
+            <that>VOLS VEURE LINDY HOP</that>
+            <template>
+	        <link>
+	            <text>Video de lindy hop</text>
+	            <url>https://www.youtube.com/watch?v=v9xxeWRxSbA</url>
+	        </link><split/>
+	        Que vols fer ara?
+	         <reply>
+                <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Llista els videos</text>
+                <postback>LLISTA ELS VIDEOS</postback>
+            </reply>
+	        </template>
+	</category>
+    <category>
+            <pattern>NO</pattern>
+            <that>VOLS VEURE LINDY HOP</that>
+            <template>Vols veure Blues?</template>
+    </category>
+    <category>
+            <pattern>SI</pattern>
+            <that>VOLS VEURE BLUES</that>
+            <template>
+	        <link>
+	        <text>Video de blues</text>
+	        <url>https://www.youtube.com/watch?v=HtXSPYEiKCY</url>    
+	        </link>
+	        <split/>
+	        Que vols fer ara?
+	         <reply>
+                <text>Menú principal</text>
+	            <postback>CONTINUAR</postback>
+            </reply>
+            <reply>
+                <text>Llista els videos</text>
+                <postback>LLISTA ELS VIDEOS</postback>
+            </reply>
+	        </template>
+	</category>
+	<category>
+	        <pattern>NO</pattern>
+	        <that>VOLS VEURE BLUES</that>
+	        <template><srai>continuar</srai></template>
+	</category>
+	<!--categoria del llistat de videos-->
+	<category>
+	    <pattern>LLISTA ELS VIDEOS</pattern>
+	    <template>
+	        Fes click sobre el que vulguis veure!
+	       <button>
+	           <text>Video Lindy 1</text>
+	           <url>https://www.youtube.com/watch?v=ahoJReiCaPk</url>
+	       </button>
+	        <button>
+	           <text>Video Lindy 2</text>
+	           <url>https://www.youtube.com/watch?v=v9xxeWRxSbA</url>
+	       </button>
+	       <button>
+	           <text>Video Blues 1</text>
+	           <url>https://youtu.be/Ih51z12MucQ</url>
+	       </button>
+	       <button>
+	           <text>Video Blues 2</text>
+	           <url>https://www.youtube.com/watch?v=HtXSPYEiKCY</url>
+	       </button><split/>
+	       <srai>continuar</srai>
+        </template>
+	</category>
+	
+			<!-- Categoria per emprar el topic per donar informació sobre festivals i utilització de context-->
+	<category>
+	    <pattern>INFORMACIO DE FESTIVALS</pattern>
+	    <template>Vols informacio sobre els festivals?</template>
+	</category>
+	<category>
+	    <pattern>SI</pattern>
+	    <that>VOLS INFORMACIO SOBRE ELS FESTIVALS</that>
+	    <template>Informacio sobre festivals de lindy o Blues?</template>
+	</category>
+	<category>
+	    <pattern>NO</pattern>
+	    <that>VOLS INFORMACIO SOBRE ELS FESTIVALS</that>
+	    <template><srai>continuar</srai></template>
+	</category>
+	<category>
+        <pattern>FESTIVALS DE LINDY #</pattern>
+        <template>
+            <think><set name= "topic">lindy</set></think>
+            Vols saber on son?
+        </template>
+    </category>
+    <category>
+        <pattern>FESTIVALS DE BLUES</pattern>
+        <template>
+            <think><set name= "topic">blues</set></think>
+             Vols saber on son?
+        </template>
+    </category>
+    <topic name="lindy">
+    <category>
+            <pattern>SI</pattern>
+            <that>VOLS SABER ON SON</that>
+            <template>
+                <link>
+                    <text> A aquest enllaç hi trobaràs informació</text>
+                    <url>https://www.swingplanit.com/</url>
+                </link>
+                <split/>
+                <srai>continuar</srai>
+            </template>
+    </category>
+    <category>
+        <pattern>NO</pattern>
+        <that>VOLS SABER ON SON</that>
+        <template><srai>continuar</srai></template>
+    </category>
+    </topic>
+    <topic name="blues">
+    <category>
+        <pattern>SI</pattern>
+        <that>VOLS SABER ON SON</that>
+            <template>
+                 <link>
+                    <text> A aquest enllaç hi trobaràs informació</text>
+                    <url>https://www.annettedances.com/blues-in-europe-calendar/</url>
+                </link>
+                <split/>
+                <srai>continuar</srai>
+            </template>
+    </category>
+    <category>
+        <pattern>NO</pattern>
+        <that>VOLS SABER ON SON</that>
+        <template><srai>continuar</srai></template>
+    </category>
+	</topic>
+</aiml>
+  
+
+	
+    
+	
+	
+	
+
