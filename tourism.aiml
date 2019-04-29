@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	<!-- Chatbot que dona informació sobre llocs del món, mapes, el temps i ajuda a trobar hospedatge-->
+	
+	
+	<!--categoria d'errors, cada cop que no enten l'usuari, treu el menú principal-->
+	<category>
+	    <pattern>*</pattern>
+	   	  <template>
+	      No t'he entès.Pots tornar a repetir-ho?<split/>
+	      <srai>escriu</srai>
+	   </template>
+	</category>
+	
+	<!--categoria principal de menú principal que enllaça amb cada categoria del llistat-->
+	 <category>
+	     <pattern>ESCRIU</pattern>
+	     <template>Per continuar escriu...
+	        <ol>
+	            <li>Parla sobre...</li>
+	            <li>Mostra el mapa de...</li>
+	            <li>Quin temps fa a...</li>
+	            <li>Cerca hotels de...</li>
+            </ol>
+        </template>    
+    </category>
+    
+    <!--categoria per començar el chat i una mica de context amb el bot-->
+    <category>
+        <pattern>HOLA</pattern>
+        <template>Hola, Necessites informació?</template>
+    </category>
+    <category>
+        <pattern>SI</pattern>
+        <that>HOLA, NECESSITES INFORMACIÓ</that>
+        <template>Molt bé! Puc informar-te de tot això: <split/>
+        <srai>escriu</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>NO</pattern>
+        <that>HOLA, NECESSITES INFORMACIÓ</that>
+        <template>Oh!! Soc una aplicació que dona informació sobre el món, si t'interessa, puc donar-te'n sobre tot això: <split/>
+        <srai>escriu</srai>
+        </template>
+    </category>
+    
+    <!--categoria que dona informació de wikipedia sobre qualsevol lloc-->
+    <category>
+	    <pattern>PARLA SOBRE *</pattern>
+	    <template>
+	        <think><set name="aixo"><star/></set></think>
+	        Un poc d'informació sobre <formal><star/></formal>
+	        <image>https://www.uoc.edu/portal/_resources/common/imatges/sala_de_premsa/noticies/2016/195-wikipedia-font-informacio.jpg</image>
+	        <button>
+	            <text>click aquí per veure la informació</text>
+	            <url>https://ca.wikipedia.org/wiki/ <star/></url>
+	        </button>
+	    </template>
+	</category>
+	
+	 <!--categoria que mostra el mapa de googlemaps de qualsevol lloc-->
+	<category>
+	    <pattern>MOSTRA EL MAPA DE *</pattern>
+	    <template>
+	        <think><set name="aixo"><star/></set></think>
+	        Aquí tens el mapa de <formal><star/></formal>
+	        <image>https://img.gestion.pe/files/article_content_ec_fotos/uploads/2017/11/06/5a0102e1285a3.jpeg</image>
+	        <button>
+	            <text>click aquí per veure el mapa</text>
+	            <url>https://www.google.cat/maps?q=<star/></url>
+	        </button>
+	    </template>
+	</category>
+	
+	<!--categoria que mostra el temps de qualsevol lloc-->
+	<category>
+	    <pattern>QUIN TEMPS FA A *</pattern>
+	    <template>
+	       <think><set name="aixo"><star/></set></think>
+	       Espero que faci bon temps a <formal><star/></formal>
+	        <image>https://image.slidesharecdn.com/tema8-150320095600-conversion-gate01/95/tema-8-el-temps-atmosfric-i-el-clima-1-638.jpg?cb=1426845551</image>
+	        <button>
+	            <text>click aquí per veure el pronòstic</text>
+	            <url>https://ca.eltiempo.es/<star/>.html</url>
+	        </button>
+	    </template>
+	</category>
+	
+	<!--categoria que mostra plana per cercar hotels a qualsevol lloc-->
+		<category>
+	    <pattern>CERCA HOTELS DE *</pattern>
+	    <template>
+	       <think><set name="aixo"><star/></set></think>
+	       Espero que trobis un hotel que t'agradi a <formal><star/></formal>
+ 	       <image>http://www.falconcabsindia.com/images/hotel-booking.jpg</image>
+	       <button>
+	            <text>click aquí per veure la disponibilitat</text>
+	            <url>https://www.trabber.cat/hotels/<star/></url>
+	        </button>
+	    </template>
+	</category>
+	
+	<!--categories que amb "name" guardat, treu informació, mostra el mapa, el temps o hotels sense haver de repetir el nom de la ciutat
+	Si el té guardat, treu la informació
+	Si no el té guardat, demana el nom de la ciutat-->
+	<category>
+	    <pattern>PARLA SOBRE ALLA</pattern>
+	    <template>
+	      <condition name="aixo">
+	            <li value="*"><srai>Parla sobre <get name="aixo"/></srai></li>
+	            <li>Sobre que vols que parli?</li> 
+	       </condition>
+	   </template>
+	</category>
+	<category>
+	    <pattern>MOSTRA EL MAPA DE ALLA </pattern>
+	    <template>
+	      <condition name="aixo">
+	            <li value="*"><srai>mostra el mapa de <get name="aixo"/></srai></li>
+	            <li>El mapa de on?</li> 
+	       </condition>
+	   </template>
+	</category>
+	<category>
+	    <pattern>QUIN TEMPS FA ALLA</pattern>
+	    <template>
+	      <condition name="aixo">
+	            <li value="*"><srai>Quin temps fa a <get name="aixo"/></srai></li>
+	            <li>El temps de on?</li> 
+	       </condition>
+	   </template>
+	</category>
+	<category>
+	    <pattern>CERCA HOTELS DE ALLA</pattern>
+	    <template>
+	      <condition name="aixo">
+	            <li value="*"><srai>cerca hotels de <get name="aixo"/></srai></li>
+	            <li>Hotels de on?</li> 
+	       </condition>
+	   </template>
+	</category>
+	
+	<!--categoria que que dona suport si no té el "name" de la ciutat guardat, el deixa ficar i l'enmagatzema-->
+	<category>
+	    <pattern>*</pattern>
+	    <that>SOBRE QUE VOLS QUE PARLI</that>
+	    <template>
+	      <srai>parla sobre <star/></srai>
+	   </template>
+	</category>
+	<category>
+	    <pattern>*</pattern>
+	    <that>EL MAPA DE ON</that>
+	    <template>
+	      <srai>mostra el mapa de <star/></srai>
+	   </template>
+	</category>
+		<category>
+	    <pattern>*</pattern>
+	    <that>EL TEMPS DE ON</that>
+	    <template>
+	      <srai>quin temps fa a <star/></srai>
+	   </template>
+	</category>
+	<category>
+	    <pattern>*</pattern>
+	    <that>HOTELS DE ON</that>
+	    <template>
+	      <srai>cerca hotels de <star/></srai>
+	   </template>
+	</category>
+</aiml>
